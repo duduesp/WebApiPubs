@@ -63,11 +63,11 @@ namespace WebApiPubs.Controllers
 
         //GetByCityState
 
-        [HttpGet("city/{city}")]
-        public ActionResult<IEnumerable<Stores>> GetByCity(string city)
+        [HttpGet("city/{city}/{state}")]
+        public ActionResult<IEnumerable<Stores>> GetByCityState(string city, string state)
         {
-            var stores = (from a in context.Stores
-                          where a.City == city
+            List<Stores> stores = (from a in context.Stores
+                          where a.City == city && a.State == state
                           select a).ToList();
             return stores;
 
