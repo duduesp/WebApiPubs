@@ -3,6 +3,7 @@ using System.Data.Common;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApiPubs.Models;
 
 namespace WebApiPubs.Controllers
@@ -29,11 +30,13 @@ namespace WebApiPubs.Controllers
         //GET BY ID
         //GET: api/publisher/5
         [HttpGet("{id}")]
+            //Publisher publisher = (from a in context.Publishers
+            //                   where a.PubId == id
+            //                   select a).SingleOrDefault();
+            //return publisher;
         public ActionResult<Publisher> GetById(string id)
         {
-            Publisher publisher = (from a in context.Publishers
-                               where a.PubId == id
-                               select a).SingleOrDefault();
+            Publisher publisher = context.Publishers.Include(x => x.Titles).SingleOrDefault(x => x. PubId== id);
             return publisher;
         }
 

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WebApiPubs.Models;
 
 namespace WebApiPubs
@@ -27,6 +28,9 @@ namespace WebApiPubs
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<pubsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("KeyDBPubs")));
+            services.AddMvc().AddNewtonsoftJson(
+                     o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             services.AddControllers();
         }
 
